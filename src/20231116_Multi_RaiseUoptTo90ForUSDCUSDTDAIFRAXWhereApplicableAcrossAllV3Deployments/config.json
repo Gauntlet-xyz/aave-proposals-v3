@@ -25,20 +25,6 @@
       "configs": {
         "RATE_UPDATE_V3": [
           {
-            "asset": "DAI",
-            "params": {
-              "optimalUtilizationRate": "_bpsToRay(90_00)",
-              "baseVariableBorrowRate": "EngineFlags.KEEP_CURRENT",
-              "variableRateSlope1": "EngineFlags.KEEP_CURRENT",
-              "variableRateSlope2": "EngineFlags.KEEP_CURRENT",
-              "stableRateSlope1": "EngineFlags.KEEP_CURRENT",
-              "stableRateSlope2": "EngineFlags.KEEP_CURRENT",
-              "baseStableRateOffset": "EngineFlags.KEEP_CURRENT",
-              "stableRateExcessOffset": "EngineFlags.KEEP_CURRENT",
-              "optimalStableToTotalDebtRatio": "EngineFlags.KEEP_CURRENT"
-            }
-          },
-          {
             "asset": "USDT",
             "params": {
               "optimalUtilizationRate": "_bpsToRay(90_00)",

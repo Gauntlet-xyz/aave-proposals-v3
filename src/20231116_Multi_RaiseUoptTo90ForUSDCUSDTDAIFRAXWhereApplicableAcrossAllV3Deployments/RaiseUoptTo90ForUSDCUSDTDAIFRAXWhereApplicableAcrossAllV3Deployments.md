@@ -15,7 +15,6 @@ A proposal to make RF and Uopt changes to stablecoins on all V3 deployments and 
 | Market       | Asset | Parameter | Current Value | Recommended Value |
 | ------------ | ----- | --------- | ------------- | ----------------- |
 | Ethereum v3  | USDT  | Uopt      | 80%           | 90%               |
-| Ethereum v3  | DAI   | Uopt      | 80%           | 90%               |
 | Ethereum v3  | FRAX  | Uopt      | 80%           | 90%               |
 | Avalanche v3 | USDT  | Uopt      | 80%           | 90%               |
 | Avalanche v3 | DAI   | Uopt      | 80%           | 90%               |

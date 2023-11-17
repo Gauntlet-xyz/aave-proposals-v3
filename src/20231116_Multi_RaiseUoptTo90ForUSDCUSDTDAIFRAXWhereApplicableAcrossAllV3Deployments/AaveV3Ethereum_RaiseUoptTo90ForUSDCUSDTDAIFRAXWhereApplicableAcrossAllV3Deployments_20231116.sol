@@ -23,22 +23,8 @@ contract AaveV3Ethereum_RaiseUoptTo90ForUSDCUSDTDAIFRAXWhereApplicableAcrossAllV
     returns (IAaveV3ConfigEngine.RateStrategyUpdate[] memory)
   {
     IAaveV3ConfigEngine.RateStrategyUpdate[]
-      memory rateStrategies = new IAaveV3ConfigEngine.RateStrategyUpdate[](3);
+      memory rateStrategies = new IAaveV3ConfigEngine.RateStrategyUpdate[](2);
     rateStrategies[0] = IAaveV3ConfigEngine.RateStrategyUpdate({
-      asset: AaveV3EthereumAssets.DAI_UNDERLYING,
-      params: IV3RateStrategyFactory.RateStrategyParams({
-        optimalUsageRatio: _bpsToRay(90_00),
-        baseVariableBorrowRate: EngineFlags.KEEP_CURRENT,
-        variableRateSlope1: EngineFlags.KEEP_CURRENT,
-        variableRateSlope2: EngineFlags.KEEP_CURRENT,
-        stableRateSlope1: EngineFlags.KEEP_CURRENT,
-        stableRateSlope2: EngineFlags.KEEP_CURRENT,
-        baseStableRateOffset: EngineFlags.KEEP_CURRENT,
-        stableRateExcessOffset: EngineFlags.KEEP_CURRENT,
-        optimalStableToTotalDebtRatio: EngineFlags.KEEP_CURRENT
-      })
-    });
-    rateStrategies[1] = IAaveV3ConfigEngine.RateStrategyUpdate({
       asset: AaveV3EthereumAssets.USDT_UNDERLYING,
       params: IV3RateStrategyFactory.RateStrategyParams({
         optimalUsageRatio: _bpsToRay(90_00),
@@ -52,7 +38,7 @@ contract AaveV3Ethereum_RaiseUoptTo90ForUSDCUSDTDAIFRAXWhereApplicableAcrossAllV
         optimalStableToTotalDebtRatio: EngineFlags.KEEP_CURRENT
       })
     });
-    rateStrategies[2] = IAaveV3ConfigEngine.RateStrategyUpdate({
+    rateStrategies[1] = IAaveV3ConfigEngine.RateStrategyUpdate({
       asset: AaveV3EthereumAssets.FRAX_UNDERLYING,
       params: IV3RateStrategyFactory.RateStrategyParams({
         optimalUsageRatio: _bpsToRay(90_00),

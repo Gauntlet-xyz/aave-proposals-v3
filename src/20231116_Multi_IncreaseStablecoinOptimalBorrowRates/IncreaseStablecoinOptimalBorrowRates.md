@@ -12,7 +12,7 @@ This AIP proposes to make adjustments to stablecoin interest rate models across 
 
 | Market       | Asset  | Parameter          | Current Value | Recommended Value |
 | ------------ | ------ | ------------------ | ------------- | ----------------- |
-| Ethereum v2  | USDC   | variableRateSlope1 | 0.035         | 0.05              |
+| Ethereum v2  | USDC   | variableRateSlope1 | 0.04          | 0.05              |
 | Ethereum v2  | USDT   | variableRateSlope1 | 0.04          | 0.05              |
 | Ethereum v2  | FRAX   | variableRateSlope1 | 0.04          | 0.05              |
 | Ethereum v2  | sUSD   | variableRateSlope1 | 0.04          | 0.05              |
@@ -23,14 +23,14 @@ This AIP proposes to make adjustments to stablecoin interest rate models across 
 | Ethereum v3  | USDT   | variableRateSlope1 | 0.04          | 0.05              |
 | Ethereum v3  | LUSD   | variableRateSlope1 | 0.04          | 0.05              |
 | Ethereum v3  | FRAX   | variableRateSlope1 | 0.04          | 0.05              |
-| Avalanche v2 | USDC   | variableRateSlope1 | 0.035         | 0.05              |
+| Avalanche v2 | USDC   | variableRateSlope1 | 0.04          | 0.05              |
 | Avalanche v2 | USDT   | variableRateSlope1 | 0.04          | 0.05              |
 | Avalanche v2 | DAI    | variableRateSlope1 | 0.04          | 0.05              |
 | Avalanche v3 | USDC   | variableRateSlope1 | 0.035         | 0.05              |
 | Avalanche v3 | USDT   | variableRateSlope1 | 0.04          | 0.05              |
 | Avalanche v3 | DAI    | variableRateSlope1 | 0.04          | 0.05              |
 | Avalanche v3 | FRAX   | variableRateSlope1 | 0.04          | 0.05              |
-| Polygon v2   | USDC   | variableRateSlope1 | 0.035         | 0.05              |
+| Polygon v2   | USDC   | variableRateSlope1 | 0.04          | 0.05              |
 | Polygon v2   | USDT   | variableRateSlope1 | 0.04          | 0.05              |
 | Polygon v2   | DAI    | variableRateSlope1 | 0.04          | 0.05              |
 | Polygon v3   | USDC   | variableRateSlope1 | 0.035         | 0.05              |
@@ -68,4 +68,4 @@ By approving this proposal, you agree that any services provided by Gauntlet sha
 
 Copyright and related rights waived via [CC0](https://creativecommons.org/publicdomain/zero/1.0/).
 
-*By approving this proposal, you agree that any services provided by Gauntlet shall be governed by the terms of service available at gauntlet.network/tos.*
+_By approving this proposal, you agree that any services provided by Gauntlet shall be governed by the terms of service available at gauntlet.network/tos._

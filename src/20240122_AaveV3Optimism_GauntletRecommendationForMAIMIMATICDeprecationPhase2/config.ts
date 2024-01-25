@@ -1,6 +1,8 @@
 import {ConfigFile} from '../../generator/types';
 export const config: ConfigFile = {
   rootOptions: {
+    configFile:
+      './src/20240122_AaveV3Optimism_GauntletRecommendationForMAIMIMATICDeprecationPhase2/config.ts',
     pools: ['AaveV3Optimism'],
     title: 'Gauntlet recommendation for MAI / MIMATIC deprecation phase 2',
     shortName: 'GauntletRecommendationForMAIMIMATICDeprecationPhase2',

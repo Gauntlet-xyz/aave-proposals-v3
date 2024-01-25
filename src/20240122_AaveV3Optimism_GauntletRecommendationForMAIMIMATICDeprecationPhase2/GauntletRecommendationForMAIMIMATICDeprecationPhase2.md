@@ -6,17 +6,9 @@ discussions: "https://governance.aave.com/t/arfc-gauntlet-recommendation-for-mai
 
 ## Simple Summary
 
-A proposal for MAI / MIMATIC deprecation on Aave Optimism v3. For more details, see the full forum post [here](https://governance.aave.com/t/arfc-gauntlet-recommendation-for-mai-mimatic-deprecation-phase-2/15957).
-
 ## Motivation
 
-As a continuation of our previous [MAI/MIMATIC deprecation](https://governance-v2.aave.com/governance/proposal/376/) AIP following MAI's depeg, Gauntlet recommends lowering MAI LT to 1% on Aave v3 Optimism.
-
 ## Specification
-
-| Asset | Current LT | Gauntlet Rec LT |
-| ----- | ---------- | --------------- |
-| MAI   | 65%        | 1%              |
 
 ## References
 
@@ -25,12 +17,6 @@ As a continuation of our previous [MAI/MIMATIC deprecation](https://governance-v
 - [Snapshot](https://snapshot.org/#/aave.eth/proposal/0x67a6941140c0c0662cfbf99254100f58930afb6763b8040c4bdbd0dfbb2a952b)
 - [Discussion](https://governance.aave.com/t/arfc-gauntlet-recommendation-for-mai-mimatic-deprecation-phase-2/15957)
 
-## Disclaimer
-
-Gauntlet reserves the right to not move forward with any parameter changes recommended in Snapshot polls, if market conditions change meaningfully.
-
 ## Copyright
 
 Copyright and related rights waived via [CC0](https://creativecommons.org/publicdomain/zero/1.0/).
-
-_By approving this proposal, you agree that any services provided by Gauntlet shall be governed by the terms of service available at gauntlet.network/tos._

@@ -1,8 +1,8 @@
 import * as fs from 'fs';
-import {transformInput, InputObject, ProtocolMapping} from './transformInput';
+import {transformInput, InputObject} from './transformInput';
 
 // This function reads the input file and processes it
-function processInputFile(filePath: string, protocolMapping: ProtocolMapping) {
+function processInputFile(filePath: string) {
   fs.readFile(filePath, {encoding: 'utf-8'}, (err, data) => {
     if (err) {
       console.error('Error reading file:', err);
@@ -21,14 +21,10 @@ function processInputFile(filePath: string, protocolMapping: ProtocolMapping) {
 
 // Retrieve the file path from command line arguments
 const filePath = process.argv[2];
-const protocolMapping: ProtocolMapping = {
-  'v3-optimism-governance': 'AaveV3Optimism',
-  // Add other mappings as needed
-};
 
 if (!filePath) {
   console.error('Please provide a file path as an argument.');
   process.exit(1);
 }
 
-processInputFile(filePath, protocolMapping);
+processInputFile(filePath);

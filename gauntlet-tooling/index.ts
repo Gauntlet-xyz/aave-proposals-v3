@@ -17,7 +17,7 @@ function processInputFile(filePath: string) {
         null,
         2
       )};`;
-      fs.writeFile('config.ts', outputString, (writeErr) => {
+      fs.writeFile('./gauntlet-tooling/config.ts', outputString, (writeErr) => {
         if (writeErr) {
           console.error('Error writing to file:', writeErr);
         } else {

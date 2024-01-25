@@ -1,0 +1,120 @@
+{
+  "global": {
+    "title": "Test",
+    "author": "Tester",
+    "snapshot": "Test.xyz",
+    "forumPost": "Test.com"
+  },
+  "v3-optimism-governance": {
+    "asset": {
+      "DAI": {
+        "ltv": "3",
+        "liqBonus": "3",
+        "borrowCap": "3",
+        "supplyCap": "3",
+        "debtCeiling": "3",
+        "flashlonable": false,
+        "liqThreshold": "3",
+        "reserveFactor": "3",
+        "liqProtocolFee": "3",
+        "enabledToBorrow": false,
+        "withSiloedBorrowing": true,
+        "interestRateStrategy": {
+          "stableRateSlope1": "3",
+          "stableRateSlope2": "3",
+          "optimalUtilizationRate": "3",
+          "variableRateSlope1": "3",
+          "variableRateSlope2": "3",
+          "baseStableRateOffset": "3",
+          "baseVariableBorrowRate": "3",
+          "stableRateExcessOffset": "3",
+          "optimalStableToTotalDebtRatio": "3"
+        },
+        "borrowableInIsolation": false,
+        "stableRateModeEnabled": true
+      },
+      "WETH": {
+        "ltv": "3",
+        "liqBonus": "3",
+        "borrowCap": "3",
+        "supplyCap": "3",
+        "debtCeiling": "3",
+        "flashlonable": false,
+        "liqThreshold": "3",
+        "reserveFactor": "3",
+        "liqProtocolFee": "3",
+        "enabledToBorrow": false,
+        "withSiloedBorrowing": true,
+        "interestRateStrategy": {
+          "stableRateSlope1": "3",
+          "stableRateSlope2": "3",
+          "optimalUtilizationRate": "3",
+          "variableRateSlope1": "3",
+          "variableRateSlope2": "3",
+          "baseStableRateOffset": "3",
+          "baseVariableBorrowRate": "3",
+          "stableRateExcessOffset": "3",
+          "optimalStableToTotalDebtRatio": "3"
+        },
+        "borrowableInIsolation": false,
+        "stableRateModeEnabled": true
+      }
+    }
+  },
+  "v3-ethereum-governance": {
+    "asset": {
+      "DAI": {
+        "ltv": "3",
+        "liqBonus": "3",
+        "borrowCap": "3",
+        "supplyCap": "3",
+        "debtCeiling": "3",
+        "flashlonable": false,
+        "liqThreshold": "3",
+        "reserveFactor": "3",
+        "liqProtocolFee": "3",
+        "enabledToBorrow": false,
+        "withSiloedBorrowing": true,
+        "interestRateStrategy": {
+          "stableRateSlope1": "3",
+          "stableRateSlope2": "3",
+          "optimalUtilizationRate": "3",
+          "variableRateSlope1": "3",
+          "variableRateSlope2": "3",
+          "baseStableRateOffset": "3",
+          "baseVariableBorrowRate": "3",
+          "stableRateExcessOffset": "3",
+          "optimalStableToTotalDebtRatio": "3"
+        },
+        "borrowableInIsolation": false,
+        "stableRateModeEnabled": true
+      },
+      "WETH": {
+        "ltv": "3",
+        "liqBonus": "3",
+        "borrowCap": "3",
+        "supplyCap": "3",
+        "debtCeiling": "3",
+        "flashlonable": false,
+        "liqThreshold": "3",
+        "reserveFactor": "3",
+        "liqProtocolFee": "3",
+        "enabledToBorrow": false,
+        "withSiloedBorrowing": true,
+        "interestRateStrategy": {
+          "stableRateSlope1": "3",
+          "stableRateSlope2": "3",
+          "optimalUtilizationRate": "3",
+          "variableRateSlope1": "3",
+          "variableRateSlope2": "3",
+          "baseStableRateOffset": "3",
+          "baseVariableBorrowRate": "3",
+          "stableRateExcessOffset": "3",
+          "optimalStableToTotalDebtRatio": "3"
+        },
+        "borrowableInIsolation": false,
+        "stableRateModeEnabled": true
+      }
+    }
+  }
+}

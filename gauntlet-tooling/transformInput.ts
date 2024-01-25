@@ -4,6 +4,13 @@ export type InputObject = {
       [assetName: string]: any;
     };
   };
+} & {
+  global?: {
+    title?: string;
+    author?: string;
+    snapshot?: string;
+    forumPost?: string;
+  };
 };
 
 export type ProtocolMapping = {
@@ -21,12 +28,33 @@ const protocolMapping: ProtocolMapping = {
 };
 
 export function transformInput(inputObject: InputObject) {
-  const output: any = {};
+  const output: any = {rootOptions: {}, poolOptions: {}};
+
+  // Handle global configuration
+  if (inputObject.global) {
+    output.rootOptions = {
+      title: inputObject.global.title || '',
+      shortName: inputObject.global.title || '',
+      date: new Date().toISOString().split('T')[0].replace(/-/g, ''),
+      author: inputObject.global.author || '',
+      discussion: inputObject.global.snapshot || '',
+      snapshot: inputObject.global.forumPost || '',
+      pools: [],
+    };
+  }
 
   for (const protocol in inputObject) {
+    if (protocol === 'global') continue;
+
     const outputProtocol = protocolMapping[protocol] || protocol;
-    output[outputProtocol] = {
-      configs: {},
+    output.rootOptions.pools.push(outputProtocol);
+    output.poolOptions[outputProtocol] = {
+      configs: {
+        RATE_UPDATE_V3: [],
+        CAPS_UPDATE: [],
+        COLLATERALS_UPDATE: [],
+        BORROWS_UPDATE: [],
+      },
       cache: {blockNumber: 115311124},
     };
 
@@ -35,23 +63,19 @@ export function transformInput(inputObject: InputObject) {
 
       // RATE_UPDATE_V3
       if (params.interestRateStrategy) {
-        output[outputProtocol].configs.RATE_UPDATE_V3 = [
-          {
-            asset,
-            params: {...params.interestRateStrategy},
-          },
-        ];
+        output.poolOptions[outputProtocol].configs.RATE_UPDATE_V3.push({
+          asset,
+          params: {...params.interestRateStrategy},
+        });
       }
 
       // CAPS_UPDATE
       if (params.supplyCap || params.borrowCap) {
-        output[outputProtocol].configs.CAPS_UPDATE = [
-          {
-            asset,
-            supplyCap: params.supplyCap || '',
-            borrowCap: params.borrowCap || '',
-          },
-        ];
+        output.poolOptions[outputProtocol].configs.CAPS_UPDATE.push({
+          asset,
+          supplyCap: params.supplyCap || '',
+          borrowCap: params.borrowCap || '',
+        });
       }
 
       // COLLATERALS_UPDATE
@@ -62,16 +86,14 @@ export function transformInput(inputObject: InputObject) {
         params.debtCeiling ||
         params.liqProtocolFee
       ) {
-        output[outputProtocol].configs.COLLATERALS_UPDATE = [
-          {
-            asset,
-            ltv: params.ltv || '',
-            liqThreshold: params.liqThreshold || '',
-            liqBonus: params.liqBonus || '',
-            debtCeiling: params.debtCeiling || '',
-            liqProtocolFee: params.liqProtocolFee || '',
-          },
-        ];
+        output.poolOptions[outputProtocol].configs.COLLATERALS_UPDATE.push({
+          asset,
+          ltv: params.ltv || '',
+          liqThreshold: params.liqThreshold || '',
+          liqBonus: params.liqBonus || '',
+          debtCeiling: params.debtCeiling || '',
+          liqProtocolFee: params.liqProtocolFee || '',
+        });
       }
 
       // BORROWS_UPDATE
@@ -83,17 +105,15 @@ export function transformInput(inputObject: InputObject) {
         params.withSiloedBorrowing !== undefined ||
         params.reserveFactor
       ) {
-        output[outputProtocol].configs.BORROWS_UPDATE = [
-          {
-            enabledToBorrow: params.enabledToBorrow ? 'ENABLED' : 'DISABLED',
-            flashloanable: params.flashlonable ? 'ENABLED' : 'DISABLED',
-            stableRateModeEnabled: params.stableRateModeEnabled ? 'ENABLED' : 'DISABLED',
-            borrowableInIsolation: params.borrowableInIsolation ? 'ENABLED' : 'DISABLED',
-            withSiloedBorrowing: params.withSiloedBorrowing ? 'ENABLED' : 'DISABLED',
-            reserveFactor: params.reserveFactor || '',
-            asset,
-          },
-        ];
+        output.poolOptions[outputProtocol].configs.BORROWS_UPDATE.push({
+          enabledToBorrow: params.enabledToBorrow ? 'ENABLED' : 'DISABLED',
+          flashloanable: params.flashlonable ? 'ENABLED' : 'DISABLED',
+          stableRateModeEnabled: params.stableRateModeEnabled ? 'ENABLED' : 'DISABLED',
+          borrowableInIsolation: params.borrowableInIsolation ? 'ENABLED' : 'DISABLED',
+          withSiloedBorrowing: params.withSiloedBorrowing ? 'ENABLED' : 'DISABLED',
+          reserveFactor: params.reserveFactor || '',
+          asset,
+        });
       }
     }
   }

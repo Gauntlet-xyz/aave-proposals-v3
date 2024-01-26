@@ -6,7 +6,8 @@
     "lint": "prettier ./",
     "lint:fix": "npm run lint -- --write",
     "generate": "tsx generator/cli",
-    "gauntlet-tooling": "tsx gauntlet-tooling/index.ts ./gauntlet-tooling/input-file.json",
+    "gauntlet-tooling": "tsx gauntletTooling/index.ts ./gauntletTooling/testFiles/input-file.json",
+    "gauntlet-tooling-md": "tsx gauntletTooling/updateMarkdown.ts",
     "generate:bgd": "tsx generator/cli -a 'BGD Labs @bgdlabs'",
     "prepare": "husky install"
   },

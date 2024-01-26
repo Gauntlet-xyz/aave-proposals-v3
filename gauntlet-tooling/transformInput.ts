@@ -30,6 +30,7 @@ const protocolMapping: ProtocolMapping = {
   'v3-arbitrum-governance': 'AaveV3Arbitrum',
   'v3-polygon-governance': 'AaveV3Polygon',
   'v3-ethereum-governance': 'AaveV3Ethereum',
+  // ... additional mappings
 };
 
 async function generateDeterministicPoolCache(pool: PoolIdentifier): Promise<PoolCache> {
@@ -42,17 +43,15 @@ export async function transformInput(inputObject: InputObject) {
   const output: any = {rootOptions: {}, poolOptions: {}};
 
   // Handle global configuration
-  if (inputObject.global) {
-    output.rootOptions = {
-      title: inputObject.global.title,
-      shortName: pascalCase(inputObject.global.title),
-      date: getDate(),
-      author: inputObject.global.author,
-      discussion: inputObject.global.snapshot,
-      snapshot: inputObject.global.forumPost,
-      pools: [],
-    };
-  }
+  output.rootOptions = {
+    title: inputObject.global.title,
+    shortName: pascalCase(inputObject.global.title),
+    date: getDate(),
+    author: inputObject.global.author,
+    discussion: inputObject.global.snapshot,
+    snapshot: inputObject.global.forumPost,
+    pools: [],
+  };
 
   for (const protocol in inputObject) {
     if (protocol === 'global') continue;
@@ -106,55 +105,66 @@ export async function transformInput(inputObject: InputObject) {
       }
 
       // BORROWS_UPDATE
-      if (
-        params.enabledToBorrow !== undefined ||
-        params.flashlonable !== undefined ||
-        params.stableRateModeEnabled !== undefined ||
-        params.borrowableInIsolation !== undefined ||
-        params.withSiloedBorrowing !== undefined ||
-        params.reserveFactor
-      ) {
-        poolConfigs.BORROWS_UPDATE.push({
-          enabledToBorrow: params.enabledToBorrow ? 'ENABLED' : 'DISABLED',
-          flashloanable: params.flashlonable ? 'ENABLED' : 'DISABLED',
-          stableRateModeEnabled: params.stableRateModeEnabled ? 'ENABLED' : 'DISABLED',
-          borrowableInIsolation: params.borrowableInIsolation ? 'ENABLED' : 'DISABLED',
-          withSiloedBorrowing: params.withSiloedBorrowing ? 'ENABLED' : 'DISABLED',
-          reserveFactor: params.reserveFactor || '',
-          asset,
-        });
-      }
+      poolConfigs.BORROWS_UPDATE.push({
+        enabledToBorrow:
+          params.enabledToBorrow !== undefined
+            ? params.enabledToBorrow
+              ? 'ENABLED'
+              : 'DISABLED'
+            : 'KEEP_CURRENT',
+        flashloanable:
+          params.flashlonable !== undefined
+            ? params.flashlonable
+              ? 'ENABLED'
+              : 'DISABLED'
+            : 'KEEP_CURRENT',
+        stableRateModeEnabled:
+          params.stableRateModeEnabled !== undefined
+            ? params.stableRateModeEnabled
+              ? 'ENABLED'
+              : 'DISABLED'
+            : 'KEEP_CURRENT',
+        borrowableInIsolation:
+          params.borrowableInIsolation !== undefined
+            ? params.borrowableInIsolation
+              ? 'ENABLED'
+              : 'DISABLED'
+            : 'KEEP_CURRENT',
+        withSiloedBorrowing:
+          params.withSiloedBorrowing !== undefined
+            ? params.withSiloedBorrowing
+              ? 'ENABLED'
+              : 'DISABLED'
+            : 'KEEP_CURRENT',
+        reserveFactor: params.reserveFactor || '',
+        asset,
+      });
     }
 
     // Append the parameter groups to poolOptions only if they have items
     if (poolConfigs.RATE_UPDATE_V3.length > 0) {
-      output.poolOptions[outputProtocol] = output.poolOptions[outputProtocol] || {
-        configs: {},
+      output.poolOptions[outputProtocol] = {
+        configs: {RATE_UPDATE_V3: poolConfigs.RATE_UPDATE_V3},
         cache: await generateDeterministicPoolCache(outputProtocol as PoolIdentifier),
       };
-      output.poolOptions[outputProtocol].configs.RATE_UPDATE_V3 = poolConfigs.RATE_UPDATE_V3;
     }
     if (poolConfigs.CAPS_UPDATE.length > 0) {
-      output.poolOptions[outputProtocol] = output.poolOptions[outputProtocol] || {
-        configs: {},
-        cache: await generateDeterministicPoolCache(outputProtocol as PoolIdentifier),
+      output.poolOptions[outputProtocol].configs = {
+        ...output.poolOptions[outputProtocol].configs,
+        CAPS_UPDATE: poolConfigs.CAPS_UPDATE,
       };
-      output.poolOptions[outputProtocol].configs.CAPS_UPDATE = poolConfigs.CAPS_UPDATE;
     }
     if (poolConfigs.COLLATERALS_UPDATE.length > 0) {
-      output.poolOptions[outputProtocol] = output.poolOptions[outputProtocol] || {
-        configs: {},
-        cache: await generateDeterministicPoolCache(outputProtocol as PoolIdentifier),
+      output.poolOptions[outputProtocol].configs = {
+        ...output.poolOptions[outputProtocol].configs,
+        COLLATERALS_UPDATE: poolConfigs.COLLATERALS_UPDATE,
       };
-      output.poolOptions[outputProtocol].configs.COLLATERALS_UPDATE =
-        poolConfigs.COLLATERALS_UPDATE;
     }
     if (poolConfigs.BORROWS_UPDATE.length > 0) {
-      output.poolOptions[outputProtocol] = output.poolOptions[outputProtocol] || {
-        configs: {},
-        cache: await generateDeterministicPoolCache(outputProtocol as PoolIdentifier),
+      output.poolOptions[outputProtocol].configs = {
+        ...output.poolOptions[outputProtocol].configs,
+        BORROWS_UPDATE: poolConfigs.BORROWS_UPDATE,
       };
-      output.poolOptions[outputProtocol].configs.BORROWS_UPDATE = poolConfigs.BORROWS_UPDATE;
     }
   }
 

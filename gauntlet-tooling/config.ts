@@ -47,18 +47,18 @@ export const config: ConfigFile = {
         ],
         BORROWS_UPDATE: [
           {
-            enabledToBorrow: 'DISABLED',
-            flashloanable: 'DISABLED',
+            enabledToBorrow: 'KEEP_CURRENT',
+            flashloanable: 'KEEP_CURRENT',
             stableRateModeEnabled: 'ENABLED',
             borrowableInIsolation: 'DISABLED',
-            withSiloedBorrowing: 'ENABLED',
+            withSiloedBorrowing: 'KEEP_CURRENT',
             reserveFactor: '3',
             asset: 'DAI',
           },
         ],
       },
       cache: {
-        blockNumber: 115315626,
+        blockNumber: 115316909,
       },
     },
   },

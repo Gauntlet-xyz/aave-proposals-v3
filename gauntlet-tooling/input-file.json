@@ -11,12 +11,9 @@
         "borrowCap": "3",
         "supplyCap": "3",
         "debtCeiling": "3",
-        "flashlonable": false,
         "liqThreshold": "3",
         "reserveFactor": "3",
         "liqProtocolFee": "3",
-        "enabledToBorrow": false,
-        "withSiloedBorrowing": true,
         "interestRateStrategy": {
           "stableRateSlope1": "3",
           "stableRateSlope2": "3",

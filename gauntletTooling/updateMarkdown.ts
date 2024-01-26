@@ -39,7 +39,7 @@ export function generateDocument(
 
   // Extract metadata and references
   const metadataRegex = /(^---[\s\S]*?---)/gm;
-  const referencesRegex = /(?<=## References\n\n)(- .*\n)+(?=\n##)/gm;
+  const referencesRegex = /(?<=## References\n\n)((?:- .*)(?:\n(?!\n##))?)+/gm;
 
   const metadata = metadataRegex.exec(existingText)?.[0] ?? '';
   const references = referencesRegex.exec(existingText)?.[0] ?? '';

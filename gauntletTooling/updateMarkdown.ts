@@ -19,13 +19,6 @@ function extractDisclaimer(text: string): string {
   return matches ? matches[0].trim() : '';
 }
 
-function extractTosContent(text: string): string {
-  const regex =
-    /(?<=\*)(By approving this proposal, you agree that any services provided by Gauntlet shall be governed by the terms of service available at gauntlet\.network\/tos\.)(?=\*)/g;
-  const matches = regex.exec(text);
-  return matches ? matches[0].trim() : '';
-}
-
 // Main function to generate the document
 export function generateDocument(
   originalFilePath: string,
@@ -39,14 +32,14 @@ export function generateDocument(
   const motivation = extractContent(originalText, 'Motivation');
   const specification = extractContent(originalText, 'Specification');
   const disclaimer = extractDisclaimer(originalText);
-  const tosContent = extractTosContent(originalText);
+  const tosContent: string = `_By approving this proposal, you agree that any services provided by Gauntlet shall be governed by the terms of service available at gauntlet.network/tos._`;
 
   // Read the existing document to get metadata and references
   const existingText = fs.readFileSync(existingFilePath, 'utf8');
 
   // Extract metadata and references
   const metadataRegex = /(^---[\s\S]*?---)/gm;
-  const referencesRegex = /(?<=## References\n\n)([\s\S]*?)(?=##)/gm;
+  const referencesRegex = /(?<=## References\n\n)(- .*\n)+(?=\n##)/gm;
 
   const metadata = metadataRegex.exec(existingText)?.[0] ?? '';
   const references = referencesRegex.exec(existingText)?.[0] ?? '';

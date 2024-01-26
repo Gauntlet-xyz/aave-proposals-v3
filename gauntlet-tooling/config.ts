@@ -3,7 +3,7 @@ export const config: ConfigFile = {
   rootOptions: {
     title: 'Test',
     shortName: 'Test',
-    date: '20240125',
+    date: '20240126',
     author: 'Tester',
     discussion: 'Test.xyz',
     snapshot: 'Test.com',
@@ -39,18 +39,18 @@ export const config: ConfigFile = {
           {
             asset: 'DAI',
             ltv: '',
-            liqThreshold: '3',
+            liqThreshold: '0.03',
             liqBonus: '',
             debtCeiling: '3',
-            liqProtocolFee: '3',
+            liqProtocolFee: '0.03',
           },
         ],
         BORROWS_UPDATE: [
           {
             enabledToBorrow: 'KEEP_CURRENT',
             flashloanable: 'KEEP_CURRENT',
-            stableRateModeEnabled: 'ENABLED',
-            borrowableInIsolation: 'DISABLED',
+            stableRateModeEnabled: true,
+            borrowableInIsolation: false,
             withSiloedBorrowing: 'KEEP_CURRENT',
             reserveFactor: '3',
             asset: 'DAI',
@@ -58,7 +58,7 @@ export const config: ConfigFile = {
         ],
       },
       cache: {
-        blockNumber: 115316909,
+        blockNumber: 115348245,
       },
     },
   },

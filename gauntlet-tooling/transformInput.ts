@@ -30,13 +30,20 @@ const protocolMapping: ProtocolMapping = {
   'v3-arbitrum-governance': 'AaveV3Arbitrum',
   'v3-polygon-governance': 'AaveV3Polygon',
   'v3-ethereum-governance': 'AaveV3Ethereum',
-  // ... additional mappings
 };
 
 async function generateDeterministicPoolCache(pool: PoolIdentifier): Promise<PoolCache> {
   const chain = getPoolChain(pool);
   const client = CHAIN_ID_CLIENT_MAP[CHAIN_TO_CHAIN_ID[chain]] as PublicClient;
   return {blockNumber: Number(await client.getBlockNumber())};
+}
+
+function divideBy100(value: string): string {
+  return (parseFloat(value) / 100).toString();
+}
+
+function divideBy100Subtract100(value: string): string {
+  return (parseFloat(value) / 100 - 1).toString();
 }
 
 export async function transformInput(inputObject: InputObject) {
@@ -96,46 +103,29 @@ export async function transformInput(inputObject: InputObject) {
       ) {
         poolConfigs.COLLATERALS_UPDATE.push({
           asset,
-          ltv: params.ltv || '',
-          liqThreshold: params.liqThreshold || '',
-          liqBonus: params.liqBonus || '',
+          ltv: params.ltv ? divideBy100(params.ltv) : '',
+          liqThreshold: params.liqThreshold ? divideBy100(params.liqThreshold) : '',
+          liqBonus: params.liqBonus ? divideBy100Subtract100(params.liqBonus) : '',
           debtCeiling: params.debtCeiling || '',
-          liqProtocolFee: params.liqProtocolFee || '',
+          liqProtocolFee: params.liqProtocolFee ? divideBy100(params.liqProtocolFee) : '',
         });
       }
 
       // BORROWS_UPDATE
       poolConfigs.BORROWS_UPDATE.push({
         enabledToBorrow:
-          params.enabledToBorrow !== undefined
-            ? params.enabledToBorrow
-              ? 'ENABLED'
-              : 'DISABLED'
-            : 'KEEP_CURRENT',
-        flashloanable:
-          params.flashlonable !== undefined
-            ? params.flashlonable
-              ? 'ENABLED'
-              : 'DISABLED'
-            : 'KEEP_CURRENT',
+          params.enabledToBorrow !== undefined ? params.enabledToBorrow : 'KEEP_CURRENT',
+        flashloanable: params.flashlonable !== undefined ? params.flashlonable : 'KEEP_CURRENT',
         stableRateModeEnabled:
           params.stableRateModeEnabled !== undefined
             ? params.stableRateModeEnabled
-              ? 'ENABLED'
-              : 'DISABLED'
             : 'KEEP_CURRENT',
         borrowableInIsolation:
           params.borrowableInIsolation !== undefined
             ? params.borrowableInIsolation
-              ? 'ENABLED'
-              : 'DISABLED'
             : 'KEEP_CURRENT',
         withSiloedBorrowing:
-          params.withSiloedBorrowing !== undefined
-            ? params.withSiloedBorrowing
-              ? 'ENABLED'
-              : 'DISABLED'
-            : 'KEEP_CURRENT',
+          params.withSiloedBorrowing !== undefined ? params.withSiloedBorrowing : 'KEEP_CURRENT',
         reserveFactor: params.reserveFactor || '',
         asset,
       });

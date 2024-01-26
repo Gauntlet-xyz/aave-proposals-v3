@@ -1,3 +1,8 @@
+import {CHAIN_TO_CHAIN_ID, getDate, getPoolChain, pascalCase} from '../generator/common';
+import {CHAIN_ID_CLIENT_MAP} from '@bgd-labs/aave-cli';
+import {PublicClient} from 'viem';
+import {PoolCache, PoolIdentifier} from '../generator/types';
+
 export type InputObject = {
   [protocol: string]: {
     asset: {
@@ -5,11 +10,11 @@ export type InputObject = {
     };
   };
 } & {
-  global?: {
-    title?: string;
-    author?: string;
-    snapshot?: string;
-    forumPost?: string;
+  global: {
+    title: string;
+    author: string;
+    snapshot: string;
+    forumPost: string;
   };
 };
 
@@ -27,18 +32,24 @@ const protocolMapping: ProtocolMapping = {
   'v3-ethereum-governance': 'AaveV3Ethereum',
 };
 
-export function transformInput(inputObject: InputObject) {
+async function generateDeterministicPoolCache(pool: PoolIdentifier): Promise<PoolCache> {
+  const chain = getPoolChain(pool);
+  const client = CHAIN_ID_CLIENT_MAP[CHAIN_TO_CHAIN_ID[chain]] as PublicClient;
+  return {blockNumber: Number(await client.getBlockNumber())};
+}
+
+export async function transformInput(inputObject: InputObject) {
   const output: any = {rootOptions: {}, poolOptions: {}};
 
   // Handle global configuration
   if (inputObject.global) {
     output.rootOptions = {
-      title: inputObject.global.title || '',
-      shortName: inputObject.global.title || '',
-      date: new Date().toISOString().split('T')[0].replace(/-/g, ''),
-      author: inputObject.global.author || '',
-      discussion: inputObject.global.snapshot || '',
-      snapshot: inputObject.global.forumPost || '',
+      title: inputObject.global.title,
+      shortName: pascalCase(inputObject.global.title),
+      date: getDate(),
+      author: inputObject.global.author,
+      discussion: inputObject.global.snapshot,
+      snapshot: inputObject.global.forumPost,
       pools: [],
     };
   }
@@ -48,14 +59,12 @@ export function transformInput(inputObject: InputObject) {
 
     const outputProtocol = protocolMapping[protocol] || protocol;
     output.rootOptions.pools.push(outputProtocol);
-    output.poolOptions[outputProtocol] = {
-      configs: {
-        RATE_UPDATE_V3: [],
-        CAPS_UPDATE: [],
-        COLLATERALS_UPDATE: [],
-        BORROWS_UPDATE: [],
-      },
-      cache: {blockNumber: 115311124},
+
+    const poolConfigs: any = {
+      RATE_UPDATE_V3: [],
+      CAPS_UPDATE: [],
+      COLLATERALS_UPDATE: [],
+      BORROWS_UPDATE: [],
     };
 
     for (const asset in inputObject[protocol].asset) {
@@ -63,7 +72,7 @@ export function transformInput(inputObject: InputObject) {
 
       // RATE_UPDATE_V3
       if (params.interestRateStrategy) {
-        output.poolOptions[outputProtocol].configs.RATE_UPDATE_V3.push({
+        poolConfigs.RATE_UPDATE_V3.push({
           asset,
           params: {...params.interestRateStrategy},
         });
@@ -71,7 +80,7 @@ export function transformInput(inputObject: InputObject) {
 
       // CAPS_UPDATE
       if (params.supplyCap || params.borrowCap) {
-        output.poolOptions[outputProtocol].configs.CAPS_UPDATE.push({
+        poolConfigs.CAPS_UPDATE.push({
           asset,
           supplyCap: params.supplyCap || '',
           borrowCap: params.borrowCap || '',
@@ -86,7 +95,7 @@ export function transformInput(inputObject: InputObject) {
         params.debtCeiling ||
         params.liqProtocolFee
       ) {
-        output.poolOptions[outputProtocol].configs.COLLATERALS_UPDATE.push({
+        poolConfigs.COLLATERALS_UPDATE.push({
           asset,
           ltv: params.ltv || '',
           liqThreshold: params.liqThreshold || '',
@@ -105,7 +114,7 @@ export function transformInput(inputObject: InputObject) {
         params.withSiloedBorrowing !== undefined ||
         params.reserveFactor
       ) {
-        output.poolOptions[outputProtocol].configs.BORROWS_UPDATE.push({
+        poolConfigs.BORROWS_UPDATE.push({
           enabledToBorrow: params.enabledToBorrow ? 'ENABLED' : 'DISABLED',
           flashloanable: params.flashlonable ? 'ENABLED' : 'DISABLED',
           stableRateModeEnabled: params.stableRateModeEnabled ? 'ENABLED' : 'DISABLED',
@@ -115,6 +124,37 @@ export function transformInput(inputObject: InputObject) {
           asset,
         });
       }
+    }
+
+    // Append the parameter groups to poolOptions only if they have items
+    if (poolConfigs.RATE_UPDATE_V3.length > 0) {
+      output.poolOptions[outputProtocol] = output.poolOptions[outputProtocol] || {
+        configs: {},
+        cache: await generateDeterministicPoolCache(outputProtocol as PoolIdentifier),
+      };
+      output.poolOptions[outputProtocol].configs.RATE_UPDATE_V3 = poolConfigs.RATE_UPDATE_V3;
+    }
+    if (poolConfigs.CAPS_UPDATE.length > 0) {
+      output.poolOptions[outputProtocol] = output.poolOptions[outputProtocol] || {
+        configs: {},
+        cache: await generateDeterministicPoolCache(outputProtocol as PoolIdentifier),
+      };
+      output.poolOptions[outputProtocol].configs.CAPS_UPDATE = poolConfigs.CAPS_UPDATE;
+    }
+    if (poolConfigs.COLLATERALS_UPDATE.length > 0) {
+      output.poolOptions[outputProtocol] = output.poolOptions[outputProtocol] || {
+        configs: {},
+        cache: await generateDeterministicPoolCache(outputProtocol as PoolIdentifier),
+      };
+      output.poolOptions[outputProtocol].configs.COLLATERALS_UPDATE =
+        poolConfigs.COLLATERALS_UPDATE;
+    }
+    if (poolConfigs.BORROWS_UPDATE.length > 0) {
+      output.poolOptions[outputProtocol] = output.poolOptions[outputProtocol] || {
+        configs: {},
+        cache: await generateDeterministicPoolCache(outputProtocol as PoolIdentifier),
+      };
+      output.poolOptions[outputProtocol].configs.BORROWS_UPDATE = poolConfigs.BORROWS_UPDATE;
     }
   }
 

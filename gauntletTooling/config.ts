@@ -29,9 +29,20 @@ export const config: ConfigFile = {
             liqProtocolFee: '',
           },
         ],
+        BORROWS_UPDATE: [
+          {
+            enabledToBorrow: 'KEEP_CURRENT',
+            flashloanable: 'DISABLED',
+            stableRateModeEnabled: 'KEEP_CURRENT',
+            borrowableInIsolation: 'KEEP_CURRENT',
+            withSiloedBorrowing: 'KEEP_CURRENT',
+            reserveFactor: '90',
+            asset: 'DAI',
+          },
+        ],
       },
       cache: {
-        blockNumber: 19095249,
+        blockNumber: 19095304,
       },
     },
   },

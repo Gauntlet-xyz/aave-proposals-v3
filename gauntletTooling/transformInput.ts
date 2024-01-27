@@ -46,6 +46,15 @@ function divideBy100Subtract100(value: string): string {
   return (parseFloat(value) / 100 - 1).toString();
 }
 
+function mapBooleanToEnabledDisabled(param) {
+  if (param === true) {
+    return 'ENABLED';
+  } else if (param === false) {
+    return 'DISABLED';
+  }
+  return 'KEEP_CURRENT';
+}
+
 export async function transformInput(inputObject: InputObject) {
   const output: any = {rootOptions: {}, poolOptions: {}};
   function shouldExcludeBorrowUpdate(obj) {
@@ -123,18 +132,25 @@ export async function transformInput(inputObject: InputObject) {
       // BORROWS_UPDATE
       const borrowUpdateObj = {
         enabledToBorrow:
-          params.enabledToBorrow !== undefined ? params.enabledToBorrow : 'KEEP_CURRENT',
-        flashloanable: params.flashlonable !== undefined ? params.flashlonable : 'KEEP_CURRENT',
+          params.enabledToBorrow !== undefined
+            ? mapBooleanToEnabledDisabled(params.enabledToBorrow)
+            : 'KEEP_CURRENT',
+        flashloanable:
+          params.flashlonable !== undefined
+            ? mapBooleanToEnabledDisabled(params.flashlonable)
+            : 'KEEP_CURRENT',
         stableRateModeEnabled:
           params.stableRateModeEnabled !== undefined
-            ? params.stableRateModeEnabled
+            ? mapBooleanToEnabledDisabled(params.stableRateModeEnabled)
             : 'KEEP_CURRENT',
         borrowableInIsolation:
           params.borrowableInIsolation !== undefined
-            ? params.borrowableInIsolation
+            ? mapBooleanToEnabledDisabled(params.borrowableInIsolation)
             : 'KEEP_CURRENT',
         withSiloedBorrowing:
-          params.withSiloedBorrowing !== undefined ? params.withSiloedBorrowing : 'KEEP_CURRENT',
+          params.withSiloedBorrowing !== undefined
+            ? mapBooleanToEnabledDisabled(params.withSiloedBorrowing)
+            : 'KEEP_CURRENT',
         reserveFactor: params.reserveFactor || '',
         asset,
       };

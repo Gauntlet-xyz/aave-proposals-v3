@@ -5,60 +5,30 @@ export const config: ConfigFile = {
     shortName: 'Test',
     date: '20240126',
     author: 'Tester',
-    discussion: 'Test.xyz',
-    snapshot: 'Test.com',
-    pools: ['AaveV3Optimism'],
+    discussion: 'test.xyz',
+    snapshot: 'test.com',
+    pools: ['AaveV3Ethereum'],
   },
   poolOptions: {
-    AaveV3Optimism: {
+    AaveV3Ethereum: {
       configs: {
-        RATE_UPDATE_V3: [
-          {
-            asset: 'DAI',
-            params: {
-              stableRateSlope1: '3',
-              stableRateSlope2: '3',
-              optimalUtilizationRate: '3',
-              variableRateSlope1: '3',
-              variableRateSlope2: '3',
-              baseStableRateOffset: '3',
-              baseVariableBorrowRate: '3',
-              stableRateExcessOffset: '3',
-              optimalStableToTotalDebtRatio: '3',
-            },
-          },
-        ],
         CAPS_UPDATE: [
           {
             asset: 'DAI',
-            supplyCap: '3',
-            borrowCap: '3',
+            supplyCap: '200000000',
+            borrowCap: '',
           },
         ],
         COLLATERALS_UPDATE: [
           {
             asset: 'DAI',
-            ltv: '',
-            liqThreshold: '0.03',
+            ltv: '70',
+            liqThreshold: '',
             liqBonus: '',
-            debtCeiling: '3',
-            liqProtocolFee: '0.03',
+            debtCeiling: '',
+            liqProtocolFee: '',
           },
         ],
-        BORROWS_UPDATE: [
-          {
-            enabledToBorrow: 'KEEP_CURRENT',
-            flashloanable: 'KEEP_CURRENT',
-            stableRateModeEnabled: true,
-            borrowableInIsolation: false,
-            withSiloedBorrowing: 'KEEP_CURRENT',
-            reserveFactor: '3',
-            asset: 'DAI',
-          },
-        ],
-      },
-      cache: {
-        blockNumber: 115348245,
       },
     },
   },

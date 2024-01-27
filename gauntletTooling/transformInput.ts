@@ -48,6 +48,16 @@ function divideBy100Subtract100(value: string): string {
 
 export async function transformInput(inputObject: InputObject) {
   const output: any = {rootOptions: {}, poolOptions: {}};
+  function shouldExcludeBorrowUpdate(obj) {
+    const keysToCheck = [
+      'enabledToBorrow',
+      'flashloanable',
+      'stableRateModeEnabled',
+      'borrowableInIsolation',
+      'withSiloedBorrowing',
+    ];
+    return keysToCheck.every((key) => obj[key] === 'KEEP_CURRENT') && obj.reserveFactor === '';
+  }
 
   // Handle global configuration
   output.rootOptions = {
@@ -59,7 +69,6 @@ export async function transformInput(inputObject: InputObject) {
     snapshot: inputObject.global.forumPost,
     pools: [],
   };
-
   for (const protocol in inputObject) {
     if (protocol === 'global') continue;
 
@@ -112,7 +121,7 @@ export async function transformInput(inputObject: InputObject) {
       }
 
       // BORROWS_UPDATE
-      poolConfigs.BORROWS_UPDATE.push({
+      const borrowUpdateObj = {
         enabledToBorrow:
           params.enabledToBorrow !== undefined ? params.enabledToBorrow : 'KEEP_CURRENT',
         flashloanable: params.flashlonable !== undefined ? params.flashlonable : 'KEEP_CURRENT',
@@ -128,7 +137,15 @@ export async function transformInput(inputObject: InputObject) {
           params.withSiloedBorrowing !== undefined ? params.withSiloedBorrowing : 'KEEP_CURRENT',
         reserveFactor: params.reserveFactor || '',
         asset,
-      });
+      };
+
+      if (!shouldExcludeBorrowUpdate(borrowUpdateObj)) {
+        poolConfigs.BORROWS_UPDATE.push(borrowUpdateObj);
+      }
+    }
+
+    if (!output.poolOptions[outputProtocol]) {
+      output.poolOptions[outputProtocol] = {configs: {}};
     }
 
     // Append the parameter groups to poolOptions only if they have items

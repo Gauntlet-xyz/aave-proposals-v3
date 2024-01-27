@@ -1,6 +1,7 @@
 import {ConfigFile} from '../../generator/types';
 export const config: ConfigFile = {
   rootOptions: {
+    configFile: './gauntletTooling/config.ts',
     title: 'Test',
     shortName: 'Test',
     date: '20240126',
@@ -12,13 +13,7 @@ export const config: ConfigFile = {
   poolOptions: {
     AaveV3Ethereum: {
       configs: {
-        CAPS_UPDATE: [
-          {
-            asset: 'DAI',
-            supplyCap: '200000000',
-            borrowCap: '',
-          },
-        ],
+        CAPS_UPDATE: [{asset: 'DAI', supplyCap: '200000000', borrowCap: ''}],
         COLLATERALS_UPDATE: [
           {
             asset: 'DAI',
@@ -30,9 +25,7 @@ export const config: ConfigFile = {
           },
         ],
       },
-      cache: {
-        blockNumber: 19095249,
-      },
+      cache: {blockNumber: 19095249},
     },
   },
 };

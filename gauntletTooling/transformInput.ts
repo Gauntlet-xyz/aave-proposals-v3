@@ -152,7 +152,6 @@ export async function transformInput(inputObject: InputObject) {
     if (poolConfigs.RATE_UPDATE_V3.length > 0) {
       output.poolOptions[outputProtocol] = {
         configs: {RATE_UPDATE_V3: poolConfigs.RATE_UPDATE_V3},
-        cache: await generateDeterministicPoolCache(outputProtocol as PoolIdentifier),
       };
     }
     if (poolConfigs.CAPS_UPDATE.length > 0) {
@@ -173,6 +172,10 @@ export async function transformInput(inputObject: InputObject) {
         BORROWS_UPDATE: poolConfigs.BORROWS_UPDATE,
       };
     }
+    output.poolOptions[outputProtocol] = {
+      configs: output.poolOptions[outputProtocol].configs,
+      cache: await generateDeterministicPoolCache(outputProtocol as PoolIdentifier),
+    };
   }
   console.log(output);
   return output;

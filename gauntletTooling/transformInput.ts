@@ -157,6 +157,6 @@ export async function transformInput(inputObject: InputObject) {
       };
     }
   }
-
+  console.log(output);
   return output;
 }

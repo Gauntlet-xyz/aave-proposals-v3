@@ -2,8 +2,7 @@ import fs from 'fs';
 import path from 'path';
 
 // Function to extract content based on header, including tables
-function extractContent(text: string, header: string): string {
-  // Adjusted to handle tables and regular text
+function extractContent(text, header) {
   const regex = new RegExp(
     `(?<=## ${header}\\n\\n)([\\s\\S]*?)(?=\\n\\n##|\\*\\*Disclaimer:|\\*By approving this proposal\\*)`,
     'gm'
@@ -13,26 +12,32 @@ function extractContent(text: string, header: string): string {
 }
 
 // Function to extract content from disclaimer
-function extractDisclaimer(text: string): string {
+function extractDisclaimer(text) {
   const regex = /(?<=\*\*Disclaimer: )(.*?)(?=\*\*)/gm;
   const matches = regex.exec(text);
   return matches ? matches[0].trim() : '';
 }
 
 // Main function to generate the document
-export function generateDocument(
-  originalFilePath: string,
-  existingFilePath: string,
-  outputFilePath: string
-): void {
-  const originalText = fs.readFileSync(originalFilePath, 'utf8');
+export function generateDocument(originalInput, existingFilePath, outputFilePath) {
+  let originalText;
+
+  // Check if originalInput is a file path or a JSON string
+  if (originalInput.startsWith('{') && originalInput.endsWith('}')) {
+    // Parse the JSON string
+    const jsonData = JSON.parse(originalInput);
+    originalText = jsonData.content;
+  } else {
+    // Read the content from the file
+    originalText = fs.readFileSync(originalInput, 'utf8');
+  }
 
   // Extract the contents from the original document
   const summary = extractContent(originalText, 'Summary');
   const motivation = extractContent(originalText, 'Motivation');
   const specification = extractContent(originalText, 'Specification');
   const disclaimer = extractDisclaimer(originalText);
-  const tosContent: string = `_By approving this proposal, you agree that any services provided by Gauntlet shall be governed by the terms of service available at gauntlet.network/tos._`;
+  const tosContent = `_By approving this proposal, you agree that any services provided by Gauntlet shall be governed by the terms of service available at gauntlet.network/tos._`;
 
   // Read the existing document to get metadata and references
   const existingText = fs.readFileSync(existingFilePath, 'utf8');
@@ -74,7 +79,9 @@ Copyright and related rights waived via [CC0](https://creativecommons.org/public
   console.log('Document created successfully!');
 }
 
-// Example usage:
-const originalFilePath = './gauntletTooling/testFiles/originalHackMD.md';
-const targetFilePath = './gauntletTooling/testFiles/targetHackMD.md';
-generateDocument(originalFilePath, targetFilePath, targetFilePath);
+// Example usage with CLI argument
+// const originalInput = process.argv[2]; // CLI argument for original content
+const originalInput = './gauntletTooling/testFiles/originalHackMD.md'; // CLI argument for original content
+const existingFilePath = './gauntletTooling/testFiles/targetHackMD.md';
+const outputFilePath = './gauntletTooling/testFiles/targetHackMD.md';
+generateDocument(originalInput, existingFilePath, outputFilePath);

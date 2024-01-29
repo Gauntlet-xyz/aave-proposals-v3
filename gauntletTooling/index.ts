@@ -3,7 +3,7 @@ import {transformInput, InputObject} from './transformInput';
 
 async function processInputData(inputData: string) {
   try {
-    const inputObject: InputObject = JSON.parse(inputData);
+    const inputObject: InputObject = JSON.parse(inputData['parameters']);
     const transformedObject = await transformInput(inputObject);
 
     const outputString = `import { ConfigFile } from '../../generator/types';\nexport const config: ConfigFile = ${JSON.stringify(

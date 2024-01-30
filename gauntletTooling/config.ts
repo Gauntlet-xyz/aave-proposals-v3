@@ -42,7 +42,7 @@ export const config: ConfigFile = {
         ],
       },
       cache: {
-        blockNumber: 19116748,
+        blockNumber: 19117141,
       },
     },
   },

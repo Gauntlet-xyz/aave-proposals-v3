@@ -2,6 +2,7 @@ import {CHAIN_TO_CHAIN_ID, getDate, getPoolChain, pascalCase} from '../generator
 import {CHAIN_ID_CLIENT_MAP} from '@bgd-labs/aave-cli';
 import {PublicClient} from 'viem';
 import {PoolCache, PoolIdentifier} from '../generator/types';
+import {getPoolNameOrMulti} from './utils';
 
 export type InputObject = {
   [protocol: string]: {
@@ -68,8 +69,19 @@ export async function transformInput(inputObject: InputObject) {
     return keysToCheck.every((key) => obj[key] === 'KEEP_CURRENT') && obj.reserveFactor === '';
   }
 
+  // const configFilePath =
+  //   './src/' +
+  //   getDate() +
+  //   '_' +
+  //   getPoolNameOrMulti(inputObject) +
+  //   '_' +
+  //   pascalCase(inputObject.global.title) +
+  //   '/' +
+  //   pascalCase(inputObject.global.title) +
+  //   '.md';
   // Handle global configuration
   output.rootOptions = {
+    // configFiles: configFilePath,
     title: inputObject.global.title,
     shortName: pascalCase(inputObject.global.title),
     date: getDate(),

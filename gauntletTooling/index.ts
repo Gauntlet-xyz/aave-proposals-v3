@@ -45,6 +45,6 @@ if (fs.existsSync(input)) {
   processInputFile(input);
 } else {
   console.log('Input data:', input);
-  console.log('Input data[parameters]: ', input['parameters']);
+  console.log('Input JSON.parse(data)[parameters]: ', JSON.parse(input)['parameters']);
   processInputData(input);
 }

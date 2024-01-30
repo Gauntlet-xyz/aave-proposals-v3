@@ -81,8 +81,8 @@ Copyright and related rights waived via [CC0](https://creativecommons.org/public
 }
 
 // Example usage with CLI argument
-const originalInput = process.argv[2]; // CLI argument for original content
-const jsonObject = JSON.parse(process.argv[3]).parameters; // CLI argument for JSON object
+const originalInput = JSON.parse(process.argv[2]); // CLI argument for original content
+const jsonObject = originalInput.parameters; // CLI argument for JSON object
 const existingFilePath =
   '../src/' +
   getDate() +
@@ -93,4 +93,4 @@ const existingFilePath =
   '/' +
   pascalCase(jsonObject.global.title) +
   '.md';
-generateDocument(originalInput, existingFilePath, existingFilePath);
+generateDocument(originalInput.description, existingFilePath, existingFilePath);

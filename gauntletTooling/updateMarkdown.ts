@@ -80,8 +80,7 @@ Copyright and related rights waived via [CC0](https://creativecommons.org/public
 }
 
 // Example usage with CLI argument
-// const originalInput = process.argv[2]; // CLI argument for original content
-const originalInput = './gauntletTooling/testFiles/originalHackMD.md'; // CLI argument for original content
+const originalInput = process.argv[2]; // CLI argument for original content
 const existingFilePath = './gauntletTooling/testFiles/targetHackMD.md';
 const outputFilePath = './gauntletTooling/testFiles/targetHackMD.md';
 generateDocument(originalInput, existingFilePath, outputFilePath);

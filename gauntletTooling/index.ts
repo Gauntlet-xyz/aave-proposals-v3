@@ -3,6 +3,7 @@ import {transformInput, InputObject} from './transformInput';
 
 async function processInputData(inputData: string) {
   try {
+    console.log('Input data:', inputData);
     const inputObject: InputObject = JSON.parse(inputData);
     const transformedObject = await transformInput(inputObject);
 

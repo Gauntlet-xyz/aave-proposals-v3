@@ -86,8 +86,8 @@ export async function transformInput(inputObject: InputObject) {
     shortName: pascalCase(inputObject.global.title),
     date: getDate(),
     author: inputObject.global.author,
-    discussion: inputObject.global.snapshot,
-    snapshot: inputObject.global.forumPost,
+    discussion: inputObject.global.forumPost,
+    snapshot: inputObject.global.snapshot,
     pools: [],
   };
   for (const protocol in inputObject) {

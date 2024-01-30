@@ -1,9 +1,9 @@
 import {ConfigFile} from '../../generator/types';
-export const config = {
+export const config: ConfigFile = {
   rootOptions: {
     title: 'Test',
     shortName: 'Test',
-    date: '20240126',
+    date: '20240129',
     author: 'Tester',
     discussion: 'test.xyz',
     snapshot: 'test.com',
@@ -16,7 +16,7 @@ export const config = {
           {
             asset: 'DAI',
             supplyCap: '200000000',
-            borrowCap: '',
+            borrowCap: '400000000',
           },
         ],
         COLLATERALS_UPDATE: [
@@ -32,17 +32,17 @@ export const config = {
         BORROWS_UPDATE: [
           {
             enabledToBorrow: 'KEEP_CURRENT',
-            flashloanable: 'DISABLED',
+            flashloanable: 'KEEP_CURRENT',
             stableRateModeEnabled: 'KEEP_CURRENT',
             borrowableInIsolation: 'KEEP_CURRENT',
-            withSiloedBorrowing: 'KEEP_CURRENT',
-            reserveFactor: '90',
+            withSiloedBorrowing: 'ENABLED',
+            reserveFactor: '',
             asset: 'DAI',
           },
         ],
       },
       cache: {
-        blockNumber: 19095304,
+        blockNumber: 19116748,
       },
     },
   },

@@ -20,19 +20,7 @@ function extractDisclaimer(text) {
 }
 
 // Main function to generate the document
-export function generateDocument(originalInput, existingFilePath, outputFilePath) {
-  let originalText;
-
-  // Check if originalInput is a file path or a JSON string
-  if (originalInput.startsWith('{') && originalInput.endsWith('}')) {
-    // Parse the JSON string
-    const jsonData = JSON.parse(originalInput);
-    originalText = jsonData.description;
-  } else {
-    // Read the content from the file
-    originalText = fs.readFileSync(originalInput, 'utf8');
-  }
-
+export function generateDocument(originalText, existingFilePath, outputFilePath) {
   // Extract the contents from the original document
   const summary = extractContent(originalText, 'Summary');
   const motivation = extractContent(originalText, 'Motivation');
@@ -40,6 +28,7 @@ export function generateDocument(originalInput, existingFilePath, outputFilePath
   const disclaimer = extractDisclaimer(originalText);
   const tosContent = `_By approving this proposal, you agree that any services provided by Gauntlet shall be governed by the terms of service available at gauntlet.network/tos._`;
 
+  console.log('BEFORE READING EXISTING FILE');
   // Read the existing document to get metadata and references
   const existingText = fs.readFileSync(existingFilePath, 'utf8');
 
@@ -84,7 +73,7 @@ Copyright and related rights waived via [CC0](https://creativecommons.org/public
 const originalInput = JSON.parse(process.argv[2]); // CLI argument for original content
 const jsonObject = originalInput.parameters; // CLI argument for JSON object
 const existingFilePath =
-  '../src/' +
+  './src/' +
   getDate() +
   '_' +
   getPoolNameOrMulti(jsonObject) +

@@ -26,7 +26,7 @@ export function generateDocument(originalInput, existingFilePath, outputFilePath
   if (originalInput.startsWith('{') && originalInput.endsWith('}')) {
     // Parse the JSON string
     const jsonData = JSON.parse(originalInput);
-    originalText = jsonData.content;
+    originalText = jsonData.description;
   } else {
     // Read the content from the file
     originalText = fs.readFileSync(originalInput, 'utf8');

@@ -1,5 +1,6 @@
 import fs from 'fs';
 import path from 'path';
+import {extractAndConcatenate, extractShortName} from './utils';
 
 // Function to extract content based on header, including tables
 function extractContent(text, header) {
@@ -81,6 +82,5 @@ Copyright and related rights waived via [CC0](https://creativecommons.org/public
 
 // Example usage with CLI argument
 const originalInput = process.argv[2]; // CLI argument for original content
-const existingFilePath = './gauntletTooling/testFiles/targetHackMD.md';
-const outputFilePath = './gauntletTooling/testFiles/targetHackMD.md';
-generateDocument(originalInput, existingFilePath, outputFilePath);
+const existingFilePath = '../src/' + extractAndConcatenate() + extractShortName() + '.md';
+generateDocument(originalInput, existingFilePath, existingFilePath);

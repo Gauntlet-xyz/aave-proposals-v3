@@ -1,4 +1,4 @@
-import {ConfigFile} from '../../generator/types';
+import {ConfigFile} from '../generator/types';
 export const config: ConfigFile = {
   rootOptions: {
     title: 'Test',

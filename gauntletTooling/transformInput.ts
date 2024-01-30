@@ -22,7 +22,7 @@ export type ProtocolMapping = {
   [inputProtocolName: string]: string;
 };
 
-const protocolMapping: ProtocolMapping = {
+export const protocolMapping: ProtocolMapping = {
   'v3-optimism-governance': 'AaveV3Optimism',
   'v3-metis-governance': 'AaveV3Metis',
   'v3-base-governance': 'AaveV3Base',

@@ -1,6 +1,6 @@
 import fs from 'fs';
-import path from 'path';
-import {extractAndConcatenate, extractShortName} from './utils';
+import {getPoolNameOrMulti} from './utils';
+import {getDate, pascalCase} from '../generator/common';
 
 // Function to extract content based on header, including tables
 function extractContent(text, header) {
@@ -82,5 +82,15 @@ Copyright and related rights waived via [CC0](https://creativecommons.org/public
 
 // Example usage with CLI argument
 const originalInput = process.argv[2]; // CLI argument for original content
-const existingFilePath = '../src/' + extractAndConcatenate() + extractShortName() + '.md';
+const jsonObject = JSON.parse(process.argv[3]).parameters; // CLI argument for JSON object
+const existingFilePath =
+  '../src/' +
+  getDate() +
+  '_' +
+  getPoolNameOrMulti(jsonObject) +
+  '_' +
+  pascalCase(jsonObject.global.title) +
+  '/' +
+  pascalCase(jsonObject.global.title) +
+  '.md';
 generateDocument(originalInput, existingFilePath, existingFilePath);

@@ -101,6 +101,7 @@ export async function transformInput(inputObject: InputObject) {
       CAPS_UPDATE: [],
       COLLATERALS_UPDATE: [],
       BORROWS_UPDATE: [],
+      FREEZE: [],
     };
 
     for (const asset in inputObject[protocol].asset) {
@@ -170,6 +171,14 @@ export async function transformInput(inputObject: InputObject) {
       if (!shouldExcludeBorrowUpdate(borrowUpdateObj)) {
         poolConfigs.BORROWS_UPDATE.push(borrowUpdateObj);
       }
+
+      // FREEZE
+      if (params.shouldBeFrozen !== undefined) {
+        poolConfigs.FREEZE.push({
+          asset,
+          shouldBeFrozen: params.shouldBeFrozen,
+        });
+      }
     }
 
     if (!output.poolOptions[outputProtocol]) {
@@ -198,6 +207,12 @@ export async function transformInput(inputObject: InputObject) {
       output.poolOptions[outputProtocol].configs = {
         ...output.poolOptions[outputProtocol].configs,
         BORROWS_UPDATE: poolConfigs.BORROWS_UPDATE,
+      };
+    }
+    if (poolConfigs.FREEZE.length > 0) {
+      output.poolOptions[outputProtocol].configs = {
+        ...output.poolOptions[outputProtocol].configs,
+        FREEZE: poolConfigs.FREEZE,
       };
     }
     output.poolOptions[outputProtocol] = {

@@ -1,10 +1,8 @@
 import * as fs from 'fs';
 import {transformInput, InputObject} from './transformInput';
 
-async function processInputData(inputData: string) {
+async function processInputData(inputObject: InputObject) {
   try {
-    console.log('Input data:', inputData);
-    const inputObject: InputObject = JSON.parse(inputData);
     const transformedObject = await transformInput(inputObject);
 
     const outputString = `import { ConfigFile } from '../../generator/types';\nexport const config: ConfigFile = ${JSON.stringify(
@@ -30,7 +28,7 @@ function processInputFile(filePath: string) {
       console.error('Error reading file:', err);
       return;
     }
-    processInputData(data);
+    processInputData(JSON.parse(data));
   });
 }
 
@@ -46,5 +44,5 @@ if (fs.existsSync(input)) {
 } else {
   console.log('Input data:', input);
   console.log('Input JSON.parse(data)[parameters]: ', JSON.parse(input)['parameters']);
-  processInputData(input);
+  processInputData(JSON.parse(input)['parameters']);
 }

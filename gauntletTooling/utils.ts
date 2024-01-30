@@ -15,3 +15,8 @@ export function getPoolNameOrMulti(inputObject: InputObject): string {
   const pools = createRootOptionsPools(inputObject);
   return pools.length === 1 ? pools[0] : 'MULTI';
 }
+
+export function getPoolName(inputObject: InputObject): string[] {
+  const pools = createRootOptionsPools(inputObject);
+  return pools;
+}

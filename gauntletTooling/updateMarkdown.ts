@@ -22,13 +22,13 @@ function extractDisclaimer(text) {
 // Main function to generate the document
 export function generateDocument(originalText, existingFilePath, outputFilePath) {
   // Extract the contents from the original document
-  const summary = extractContent(originalText, 'Summary');
+  const summary = extractContent(originalText, 'Simple Summary');
   const motivation = extractContent(originalText, 'Motivation');
   const specification = extractContent(originalText, 'Specification');
-  const disclaimer = extractDisclaimer(originalText);
+  const disclaimer =
+    'Gauntlet has not been compensated by any third party for publishing this ARFC.';
   const tosContent = `_By approving this proposal, you agree that any services provided by Gauntlet shall be governed by the terms of service available at gauntlet.network/tos._`;
 
-  console.log('BEFORE READING EXISTING FILE');
   // Read the existing document to get metadata and references
   const existingText = fs.readFileSync(existingFilePath, 'utf8');
 

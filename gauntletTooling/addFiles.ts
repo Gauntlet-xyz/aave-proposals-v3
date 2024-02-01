@@ -12,8 +12,6 @@ function processFilesInDirectory(directoryPath: string, jsonObject: InputObject)
   }
 
   let files: string[] = fs.readdirSync(directoryPath);
-  const diffFileName = getDiffFileName(jsonObject);
-  files.push('./diffs/' + diffFileName);
   const fileObject: Record<string, string> = {};
 
   files.forEach((file) => {
@@ -25,6 +23,15 @@ function processFilesInDirectory(directoryPath: string, jsonObject: InputObject)
       console.error(`Error reading file at ${filePath}: ${(error as Error).message}`);
     }
   });
+
+  const diffFileName = getDiffFileName(jsonObject);
+  const filePath: string = path.join('./diffs/', diffFileName);
+  try {
+    const fileContent: string = fs.readFileSync(filePath, 'utf8');
+    fileObject[filePath] = fileContent;
+  } catch (error) {
+    console.error(`Error reading file at ${filePath}: ${(error as Error).message}`);
+  }
 
   fs.writeFileSync('./file-object.json', JSON.stringify(fileObject, null, 2));
   console.log('file-object.json has been created successfully with contents of the directory.');

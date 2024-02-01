@@ -32,6 +32,8 @@ export function getDiffFileName(inputObject: InputObject) {
     '_' +
     'before' +
     '_' +
+    getPoolNameOrMulti(inputObject) +
+    '_' +
     pascalCase(inputObject.global.title) +
     '_' +
     getDate() +

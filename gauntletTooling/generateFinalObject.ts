@@ -68,13 +68,7 @@ function processMarkdownFile(markdownFilePath: string): void {
 // Process the files in the directory
 const originalInput = JSON.parse(process.argv[2]); // CLI argument for original content
 const jsonObject = originalInput.parameters; // CLI argument for JSON object
-const directoryPath =
-  './src/' +
-  getDate() +
-  '_' +
-  getPoolNameOrMulti(jsonObject) +
-  '_' +
-  pascalCase(jsonObject.global.title);
+const directoryPath = './diffs/' + getDiffFileName(jsonObject);
 console.log(`Processing files in directory: ${directoryPath}`);
 
 // Process the Markdown file

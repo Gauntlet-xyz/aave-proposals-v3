@@ -10,6 +10,7 @@
     "gauntlet-tooling-md": "tsx gauntletTooling/updateMarkdown.ts",
     "gauntlet-tooling-test": "tsx gauntletTooling/test.ts",
     "gauntlet-tooling-files": "tsx gauntletTooling/addFiles.ts",
+    "gauntlet-tooling-gen-proposal": "tsx gauntletTooling/generateFinalObject.ts",
     "generate:bgd": "tsx generator/cli -a 'BGD Labs @bgdlabs'",
     "prepare": "husky install"
   },

@@ -3,10 +3,10 @@ export const config: ConfigFile = {
   rootOptions: {
     title: 'Test',
     shortName: 'Test',
-    date: '20240130',
+    date: '20240131',
     author: 'Tester',
-    discussion: 'test.xyz',
-    snapshot: 'test.com',
+    discussion: 'test.com',
+    snapshot: 'test.xyz',
     pools: ['AaveV3Ethereum'],
   },
   poolOptions: {
@@ -24,7 +24,7 @@ export const config: ConfigFile = {
         ],
       },
       cache: {
-        blockNumber: 19121773,
+        blockNumber: 19129883,
       },
     },
   },

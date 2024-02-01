@@ -2,15 +2,31 @@ import * as fs from 'fs';
 import * as path from 'path';
 import {getPoolNameOrMulti} from './utils';
 import {getDate, pascalCase} from '../generator/common';
+import {InputObject} from './transformInput';
 
 // Function to process all files in a given directory
-function processFilesInDirectory(directoryPath: string): void {
+function processFilesInDirectory(directoryPath: string, jsonObject: InputObject): void {
   if (!fs.existsSync(directoryPath)) {
     console.error(`Directory at ${directoryPath} does not exist.`);
     process.exit(1);
   }
 
-  const files: string[] = fs.readdirSync(directoryPath);
+  let files: string[] = fs.readdirSync(directoryPath);
+  const diffFileName =
+    getPoolNameOrMulti(jsonObject) +
+    '_' +
+    pascalCase(jsonObject.global.title) +
+    '_' +
+    getDate() +
+    '_' +
+    'before' +
+    '_' +
+    pascalCase(jsonObject.global.title) +
+    '_' +
+    getDate() +
+    '_';
+  ('after.md');
+  files.push('./diffs/' + diffFileName);
   const fileObject: Record<string, string> = {};
 
   files.forEach((file) => {
@@ -23,7 +39,7 @@ function processFilesInDirectory(directoryPath: string): void {
     }
   });
 
-  fs.writeFileSync('./aave-v3-governance/file-object.json', JSON.stringify(fileObject, null, 2));
+  fs.writeFileSync('./file-object.json', JSON.stringify(fileObject, null, 2));
   console.log('file-object.json has been created successfully with contents of the directory.');
 }
 
@@ -37,4 +53,5 @@ const directoryPath =
   getPoolNameOrMulti(jsonObject) +
   '_' +
   pascalCase(jsonObject.global.title);
-processFilesInDirectory(directoryPath);
+console.log(`Processing files in directory: ${directoryPath}`);
+processFilesInDirectory(directoryPath, jsonObject);

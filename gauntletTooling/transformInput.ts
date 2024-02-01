@@ -1,8 +1,7 @@
 import {CHAIN_TO_CHAIN_ID, getDate, getPoolChain, pascalCase} from '../generator/common';
-import {CHAIN_ID_CLIENT_MAP} from '@bgd-labs/aave-cli';
+import {CHAIN_ID_CLIENT_MAP} from '@bgd-labs/js-utils';
 import {PublicClient} from 'viem';
 import {PoolCache, PoolIdentifier} from '../generator/types';
-import {getPoolNameOrMulti} from './utils';
 
 export type InputObject = {
   [protocol: string]: {

@@ -1,3 +1,4 @@
+import {getDate, pascalCase} from '../generator/common';
 import {protocolMapping, InputObject} from './transformInput';
 
 function createRootOptionsPools(inputObject: InputObject): string[] {
@@ -19,4 +20,22 @@ export function getPoolNameOrMulti(inputObject: InputObject): string {
 export function getPoolName(inputObject: InputObject): string[] {
   const pools = createRootOptionsPools(inputObject);
   return pools;
+}
+
+export function getDiffFileName(inputObject: InputObject) {
+  const diffFileName =
+    getPoolNameOrMulti(inputObject) +
+    '_' +
+    pascalCase(inputObject.global.title) +
+    '_' +
+    getDate() +
+    '_' +
+    'before' +
+    '_' +
+    pascalCase(inputObject.global.title) +
+    '_' +
+    getDate() +
+    '_' +
+    'after.md';
+  return diffFileName;
 }

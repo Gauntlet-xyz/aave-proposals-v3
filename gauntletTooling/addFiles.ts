@@ -1,6 +1,6 @@
 import * as fs from 'fs';
 import * as path from 'path';
-import {getPoolNameOrMulti} from './utils';
+import {getPoolNameOrMulti, getDiffFileName} from './utils';
 import {getDate, pascalCase} from '../generator/common';
 import {InputObject} from './transformInput';
 
@@ -12,20 +12,7 @@ function processFilesInDirectory(directoryPath: string, jsonObject: InputObject)
   }
 
   let files: string[] = fs.readdirSync(directoryPath);
-  const diffFileName =
-    getPoolNameOrMulti(jsonObject) +
-    '_' +
-    pascalCase(jsonObject.global.title) +
-    '_' +
-    getDate() +
-    '_' +
-    'before' +
-    '_' +
-    pascalCase(jsonObject.global.title) +
-    '_' +
-    getDate() +
-    '_';
-  ('after.md');
+  const diffFileName = getDiffFileName(jsonObject);
   files.push('./diffs/' + diffFileName);
   const fileObject: Record<string, string> = {};
 

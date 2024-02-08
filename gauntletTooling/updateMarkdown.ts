@@ -1,6 +1,5 @@
 import fs from 'fs';
-import {getPoolNameOrMulti} from './utils';
-import {getDate, pascalCase} from '../generator/common';
+import {getPoolNameOrMulti, pascalCase, getDate} from './utils';
 
 // Function to extract content based on header, including tables
 function extractContent(text, header) {
@@ -8,13 +7,6 @@ function extractContent(text, header) {
     `(?<=## ${header}\\n\\n)([\\s\\S]*?)(?=\\n\\n##|\\*\\*Disclaimer:|\\*By approving this proposal\\*)`,
     'gm'
   );
-  const matches = regex.exec(text);
-  return matches ? matches[0].trim() : '';
-}
-
-// Function to extract content from disclaimer
-function extractDisclaimer(text) {
-  const regex = /(?<=\*\*Disclaimer: )(.*?)(?=\*\*)/gm;
   const matches = regex.exec(text);
   return matches ? matches[0].trim() : '';
 }

@@ -1,7 +1,6 @@
 import * as fs from 'fs';
 import * as path from 'path';
-import {getPoolNameOrMulti, getDiffFileName} from './utils';
-import {getDate, pascalCase} from '../generator/common';
+import {getDate, getPoolNameOrMulti, pascalCase, getDiffFileName} from './utils';
 import {InputObject} from './transformInput';
 
 // Function to process all files in a given directory

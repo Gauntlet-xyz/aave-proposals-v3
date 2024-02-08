@@ -1,8 +1,5 @@
 import * as fs from 'fs';
-import * as path from 'path';
-import {getPoolNameOrMulti, getDiffFileName} from './utils';
-import {getDate, pascalCase} from '../generator/common';
-import {InputObject} from './transformInput';
+import {getDiffFileName} from './utils';
 
 // Define types for Markdown section
 interface MarkdownSection {

@@ -1,7 +1,6 @@
 import fs from 'fs';
 import {exec} from 'child_process';
-import {getPoolName} from './utils';
-import {getDate, pascalCase} from '../generator/common';
+import {getPoolName, pascalCase, getDate} from './utils';
 
 const originalInput = JSON.parse(process.argv[2]);
 const jsonObject = originalInput.parameters;
